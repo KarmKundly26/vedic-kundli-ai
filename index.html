@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vedic Kundli AI</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f1e9;
+      color: #253047;
+    }
+
+    header {
+      background: #10243a;
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    header h1 {
+      margin: 0 0 10px;
+      color: #e6c77b;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: 30px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px #00000012;
+    }
+
+    h2 {
+      color: #10243a;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 7px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 25px;
+      padding: 14px;
+      background: #b58b38;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #96702b;
+    }
+
+    #message {
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Vedic Kundli AI</h1>
+    <p>Discover Your Vedic Birth Chart</p>
+    <p>Parashari Astrology | Lahiri Ayanamsha</p>
+  </header>
+
+  <main class="container">
+
+    <h2>Enter Your Birth Details</h2>
+    <p>Please enter accurate birth information.</p>
+
+    <form id="kundliForm">
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter your name">
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" required>
+
+      <label for="tob">Time of Birth</label>
+      <input type="time" id="tob" required>
+
+      <label for="place">Birth Place</label>
+      <input type="text" id="place"
+             placeholder="City, State, Country" required>
+
+      <label for="language">Report Language</label>
+      <select id="language">
+        <option value="Hindi">Hindi</option>
+        <option value="English">English</option>
+        <option value="Hinglish">Hinglish</option>
+        <option value="Multi">All Three Languages</option>
+      </select>
+
+      <button type="submit">Generate Kundli</button>
+
+    </form>
+
+    <div id="message"></div>
+
+  </main>
+
+  <footer>
+    Vedic Kundli AI | Traditional Vedic Astrology
+  </footer>
+
+  <script>
+    document.getElementById("kundliForm")
+      .addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        document.getElementById("message").innerHTML =
+          "<strong>Your birth details have been entered.</strong><br>" +
+          "The actual Kundli calculation engine will be connected in the next development step.";
+      });
+  </script>
+
+</body>
+</html>
