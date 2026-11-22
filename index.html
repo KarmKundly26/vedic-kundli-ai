@@ -135,16 +135,59 @@
   </footer>
 
   <script>
-    document.getElementById("kundliForm")
-      .addEventListener("submit", function(event) {
+document.getElementById("kundliForm")
+.addEventListener("submit", async function(event) {
 
-        event.preventDefault();
+    event.preventDefault();
 
-        document.getElementById("message").innerHTML =
-          "<strong>Your birth details have been entered.</strong><br>" +
-          "The actual Kundli calculation engine will be connected in the next development step.";
-      });
-  </script>
+    const message = document.getElementById("message");
+    const button = this.querySelector("button");
+
+    const name = document.getElementById("name").value;
+    const dob = document.getElementById("dob").value;
+    const tob = document.getElementById("tob").value;
+    const place = document.getElementById("place").value;
+
+    if (!dob || !tob || !place) {
+        message.textContent = "Please enter all required birth details.";
+        return;
+    }
+
+    try {
+
+        button.disabled = true;
+        button.textContent = "Finding Birth Details...";
+
+        // Find Birth Place and Time Zone
+        const location = await window.findBirthPlace(place);
+
+        // Display Results
+        message.style.whiteSpace = "pre-line";
+
+        message.textContent =
+            "Birth Details Found Successfully!\n\n" +
+            "Name: " + name + "\n" +
+            "Birth Place: " + location.name + "\n" +
+            "Latitude: " + location.latitude + "\n" +
+            "Longitude: " + location.longitude + "\n" +
+            "Time Zone: " + location.timeZone + "\n" +
+            "Date of Birth: " + dob + "\n" +
+            "Time of Birth: " + tob;
+
+    } catch (error) {
+
+        message.textContent = "Error: " + error.message;
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Generate Kundli";
+
+    }
+
+});
+</script>
+  
 <script type="module" src="./calculator.js"></script>
   <script src="./location.js"></script>
 </body>
