@@ -21,6 +21,7 @@ window.findBirthPlace = async function(place) {
       "OpenStreetMap Connection Failed: " + error.message
     );
   }
+  
 
   if (!response.ok) {
     throw new Error(
@@ -72,4 +73,37 @@ window.findBirthPlace = async function(place) {
   };
 };
 
-console.log("Location & Timezone Diagnostic Loaded");
+// STEP 3: Convert Local Birth Time to UTC
+
+window.convertBirthTimeToUTC = function(date, time, timeZone) {
+
+  if (typeof moment === "undefined") {
+    throw new Error("Timezone Library is not loaded.");
+  }
+
+  if (!moment.tz.zone(timeZone)) {
+    throw new Error("Invalid Time Zone: " + timeZone);
+  }
+
+  const localDateTime = `${date} ${time}`;
+
+  const birthMoment = moment.tz(
+    localDateTime,
+    "YYYY-MM-DD HH:mm",
+    true,
+    timeZone
+  );
+
+  if (!birthMoment.isValid()) {
+    throw new Error("Invalid Birth Date or Time.");
+  }
+
+  return {
+    localDateTime: localDateTime,
+    timeZone: timeZone,
+    utcDateTime: birthMoment.clone().utc().format("YYYY-MM-DDTHH:mm:ss[Z]"),
+    utcOffset: birthMoment.format("Z")
+  };
+};
+
+console.log("UTC Time Conversion Function Loaded");
