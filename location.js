@@ -1,4 +1,4 @@
-// VEDIC KUNDLI AI - BIRTH PLACE & TIMEZONE FINDER
+// VEDIC KUNDLI AI - LOCATION & TIMEZONE DIAGNOSTIC
 
 window.findBirthPlace = async function(place) {
 
@@ -7,14 +7,25 @@ window.findBirthPlace = async function(place) {
   }
 
   // STEP 1: Find Birth Place
+
   const url =
     "https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q=" +
     encodeURIComponent(place);
 
-  const response = await fetch(url);
+  let response;
+
+  try {
+    response = await fetch(url);
+  } catch (error) {
+    throw new Error(
+      "OpenStreetMap Connection Failed: " + error.message
+    );
+  }
 
   if (!response.ok) {
-    throw new Error("Location service is temporarily unavailable.");
+    throw new Error(
+      "OpenStreetMap Error: HTTP " + response.status
+    );
   }
 
   const results = await response.json();
@@ -27,13 +38,24 @@ window.findBirthPlace = async function(place) {
   const longitude = Number(results[0].lon);
 
   // STEP 2: Find Time Zone
+
   const timezoneURL =
     `https://timeapi.io/api/TimeZone/coordinate?latitude=${latitude}&longitude=${longitude}`;
 
-  const timezoneResponse = await fetch(timezoneURL);
+  let timezoneResponse;
+
+  try {
+    timezoneResponse = await fetch(timezoneURL);
+  } catch (error) {
+    throw new Error(
+      "TimeAPI Connection Failed: " + error.message
+    );
+  }
 
   if (!timezoneResponse.ok) {
-    throw new Error("Time Zone service is unavailable.");
+    throw new Error(
+      "TimeAPI Error: HTTP " + timezoneResponse.status
+    );
   }
 
   const timezoneData = await timezoneResponse.json();
@@ -50,4 +72,4 @@ window.findBirthPlace = async function(place) {
   };
 };
 
-console.log("Birth Place & Time Zone Finder Loaded");
+console.log("Location & Timezone Diagnostic Loaded");
