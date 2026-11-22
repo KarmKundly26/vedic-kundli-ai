@@ -160,19 +160,27 @@ document.getElementById("kundliForm")
 
         // Find Birth Place and Time Zone
         const location = await window.findBirthPlace(place);
-
+      
+const utcResult = window.convertBirthTimeToUTC(
+    dob,
+    tob,
+    location.timeZone
+  
+);
         // Display Results
         message.style.whiteSpace = "pre-line";
 
         message.textContent =
-            "Birth Details Found Successfully!\n\n" +
-            "Name: " + name + "\n" +
-            "Birth Place: " + location.name + "\n" +
-            "Latitude: " + location.latitude + "\n" +
-            "Longitude: " + location.longitude + "\n" +
-            "Time Zone: " + location.timeZone + "\n" +
-            "Date of Birth: " + dob + "\n" +
-            "Time of Birth: " + tob;
+    "Birth Details Found Successfully!\n\n" +
+    "Name: " + name + "\n" +
+    "Birth Place: " + location.name + "\n" +
+    "Latitude: " + location.latitude + "\n" +
+    "Longitude: " + location.longitude + "\n" +
+    "Time Zone: " + location.timeZone + "\n" +
+    "Date of Birth: " + dob + "\n" +
+    "Time of Birth: " + tob + "\n" +
+    "UTC Date & Time: " + utcResult.utcDateTime + "\n" +
+    "UTC Offset: " + utcResult.utcOffset;
 
     } catch (error) {
 
